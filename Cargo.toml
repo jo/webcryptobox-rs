@@ -1,0 +1,9 @@
+[package]
+name = "webcryptobox"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+openssl = "0.10.38"
+hex = "0.4.3"
+base64 = "0.13.0"
