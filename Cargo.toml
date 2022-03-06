@@ -1,9 +1,17 @@
 [package]
 name = "webcryptobox"
-version = "1.0.0"
-license = "Apache-2.0"
+description = "Convenient wrappers around OpenSSL to use WebCrypto compatible cryptography."
+version = "1.0.1"
 edition = "2021"
-description = "Webcryptobox provides convenient wrappers around OpenSSL to use WebCrypto compatible cryptography."
+documentation = "https://docs.rs/webcryptobox/latest/webcryptobox/"
+homepage = "https://github.com/jo/webcryptobox-rs"
+repository = "https://github.com/jo/webcryptobox-rs"
+readme = "README.md"
+license = "Apache-2.0"
+license-file = "LICENSE"
+authors = ["Johannes J. Schmidt <schmidt@pm.me>"]
+keywords = ["WebCrypto", "crypto", "ec", "aes"]
+
 
 [dependencies]
 openssl = "0.10.38"

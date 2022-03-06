@@ -5,7 +5,7 @@ It works nicely together with the [JavaScript Webcryptobox](https://github.com/j
 
 Webcryptobox provides functions for elliptic curve key generation, derivation, import and export as well as AES encryption and decryption.
 
-Webcryptobox comes with both a library and a little command line interface. For the library documentation, see [RustDoc](INSERT LINK HERE). In the following I describe the CLI usage.
+Webcryptobox comes with both a library and a little command line interface. For the library documentation, see [docs.rs/webcryptobox](https://docs.rs/webcryptobox/latest/webcryptobox/). In the following I describe the CLI usage.
 
 ## Installation
 Clone the project, compile it and use the binary:
