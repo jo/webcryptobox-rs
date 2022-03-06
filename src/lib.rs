@@ -12,6 +12,38 @@
 //!
 //! Webcryptobox helps with elliptic curve key generation, derivation, fingerprinting, import and
 //! export as well as AES encryption and decryption.
+//!
+//! # Example:
+//!
+//! ```rust
+//! let wcb = webcryptobox::Webcryptobox::default();
+//!
+//! // Alice creates a key and sends her public key pem to Bob
+//! let alice = wcb.generate_key_pair().unwrap();
+//! let alice_public_key = wcb.derive_public_key(&alice).unwrap();
+//! let alice_public_key_pem = wcb.export_public_key_pem(&alice_public_key).unwrap();
+//!
+//! // Bob also creates a key and sends his public key pem to Alice
+//! let bob = wcb.generate_key_pair().unwrap();
+//! let bobs_public_key = wcb.derive_public_key(&bob).unwrap();
+//! let bob_public_key_pem = wcb.export_public_key_pem(&bobs_public_key).unwrap();
+//!
+//! // Alice uses Bobs public key to derive a shared key
+//! let bobs_key = wcb.import_public_key_pem(&bob_public_key_pem).unwrap();
+//! let alice_shared_key = wcb.derive_key(alice, bobs_key).unwrap();
+//!
+//! // She now encrypts a message and sends the encrypted message and the iv to Bob
+//! let iv = wcb.generate_iv().unwrap();
+//! let data = (b"a secret message").to_vec();
+//! let encrypted_message = wcb.encrypt(&alice_shared_key, &iv, &data).unwrap();
+//!
+//! // Now Bob derives the same shared secret
+//! let alice_key = wcb.import_public_key_pem(&alice_public_key_pem).unwrap();
+//! let bobs_shared_key = wcb.derive_key(bob, alice_key).unwrap();
+//!
+//! // and decrypts the message
+//! let message = wcb.decrypt(&bobs_shared_key, &iv, &encrypted_message);
+//! ```
 
 use openssl::derive::Deriver;
 use openssl::ec::{EcGroup, EcKey};
@@ -494,8 +526,8 @@ impl Webcryptobox {
     ///
     /// let alice = wcb.generate_key_pair().unwrap();
     /// let bob = wcb.generate_key_pair().unwrap();
-    /// let bobs_public_key = wcb.derive_public_key(&bob).unwrap();
     /// let alice_public_key = wcb.derive_public_key(&alice).unwrap();
+    /// let bobs_public_key = wcb.derive_public_key(&bob).unwrap();
     ///
     /// let iv = wcb.generate_iv().unwrap();
     /// let data = (b"a secret message").to_vec();
