@@ -34,9 +34,9 @@ impl Webcryptobox {
     /// This example uses the curve `P-256`, AES in `CBC` mode with a key length of 128.
     ///
     /// **Supported Curves:**
-    /// * `P-256` (Nid::X9_62_PRIME256V1) aka `secp256r1` or `prime256v1`
-    /// * `P-384` (Nid::SECP384R1) aka `secp384r1` or `ansip384r1`
-    /// * `P-521` (Nid::SECP521R1) aka `secp521r1` or `ansip521r1`
+    /// * `P-256` [openssl::Nid::X9_62_PRIME256V1`] aka `secp256r1` or `prime256v1`
+    /// * `P-384` [openssl::Nid::SECP384R1`] aka `secp384r1` or `ansip384r1`
+    /// * `P-521` [openssl::Nid::SECP521R1`] aka `secp521r1` or `ansip521r1`
     ///
     /// **Supported AES Modes:**
     /// * `CBC`: Cipher Block Chaining Mode
@@ -81,8 +81,10 @@ impl Webcryptobox {
 
     /// Creates a Webcryptobox with defaults (`curve=P-521, mode=GCM, length=256`).
     ///
-    /// ```rs
-    /// let wcb = Webcryptobox::default();
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
     /// ```
     pub fn default() -> Webcryptobox {
         let curve = Nid::SECP521R1;
@@ -98,7 +100,10 @@ impl Webcryptobox {
 
     /// Generate an EC private key.
     ///
-    /// ```rs
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
     /// let key = wcb.generate_key_pair();
     /// ```
     pub fn generate_key_pair(&self) -> Result<EcKey<Private>, ErrorStack> {
@@ -107,8 +112,11 @@ impl Webcryptobox {
 
     /// Given a private EC key, derives the public EC key.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key_pair();
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key_pair().unwrap();
     /// let public_key = wcb.derive_public_key(&key);
     /// ```
     pub fn derive_public_key(
@@ -122,16 +130,19 @@ impl Webcryptobox {
 
     /// Import a private key PEM.
     ///
-    /// ```rs
-    /// let pem = b"-----BEGIN PRIVATE KEY-----
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let pem = (b"-----BEGIN PRIVATE KEY-----
     /// MIHuAgEAMBAGByqGSM49AgEGBSuBBAAjBIHWMIHTAgEBBEIBcf8zEjlssqn4aTEB
     /// RR43ofwH/4BAXDAAd83Kz1Dyd+Ko0pit4ESgqSu/bJMdnDrpiGYuz0Klarwip8LD
     /// rYd9mEahgYkDgYYABAF2Nu9XKPs2CVFocuqCfaX5FzDUt6/nT/3Evqq8jBhK/ziN
     /// TrEs4wkZjuei5TS25aabX6iMex3etoN/GOw1KYpI4QBtIUnWudG8FT8N+USHSL9G
     /// h9fi+Yofeq4Io9DxPU1ChCKPIoQ6ORAMWoOCk9bTdIy6yqx33+RIM04wub4QAgDo
     /// LQ==
-    /// -----END PRIVATE KEY-----";
-    /// let key = wcb.import_private_key_pem(&pem)
+    /// -----END PRIVATE KEY-----").to_vec();
+    /// let key = wcb.import_private_key_pem(&pem);
     /// ```
     pub fn import_private_key_pem(&self, pem: &[u8]) -> Result<EcKey<Private>, ErrorStack> {
         EcKey::private_key_from_pem(pem)
@@ -139,14 +150,17 @@ impl Webcryptobox {
 
     /// Import a public key PEM.
     ///
-    /// ```rs
-    /// let pem = b"-----BEGIN PUBLIC KEY-----
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let pem = (b"-----BEGIN PUBLIC KEY-----
     /// MIGbMBAGByqGSM49AgEGBSuBBAAjA4GGAAQBdjbvVyj7NglRaHLqgn2l+Rcw1Lev
     /// 50/9xL6qvIwYSv84jU6xLOMJGY7nouU0tuWmm1+ojHsd3raDfxjsNSmKSOEAbSFJ
     /// 1rnRvBU/DflEh0i/RofX4vmKH3quCKPQ8T1NQoQijyKEOjkQDFqDgpPW03SMusqs
     /// d9/kSDNOMLm+EAIA6C0=
-    /// -----END PUBLIC KEY-----";
-    /// let key = wcb.import_public_key_pem(&pem)
+    /// -----END PUBLIC KEY-----").to_vec();
+    /// let key = wcb.import_public_key_pem(&pem);
     /// ```
     pub fn import_public_key_pem(&self, pem: &[u8]) -> Result<EcKey<Public>, ErrorStack> {
         EcKey::public_key_from_pem(pem)
@@ -154,8 +168,11 @@ impl Webcryptobox {
 
     /// Export a private EC key in PEM format.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key_pair();
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key_pair().unwrap();
     /// let pem = wcb.export_private_key_pem(key);
     /// ```
     pub fn export_private_key_pem(
@@ -168,9 +185,12 @@ impl Webcryptobox {
 
     /// Export a public EC key in PEM format.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key_pair();
-    /// let public_key = wcb.derive_public_key(&key);
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key_pair().unwrap();
+    /// let public_key = wcb.derive_public_key(&key).unwrap();
     /// let pem = wcb.export_public_key_pem(&public_key);
     /// ```
     pub fn export_public_key_pem(&self, public_key: &EcKey<Public>) -> Result<Vec<u8>, ErrorStack> {
@@ -179,10 +199,14 @@ impl Webcryptobox {
 
     /// Calculate a SHA-1 fingeprint from a private key.
     ///
-    /// This hashes the DER data of the public key part of the key.
+    /// This hashes the DER data of the public key part of the key. Note this does not create a
+    /// hash of the private key, but the public key.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key_pair();
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key_pair().unwrap();
     /// let fingerprint = wcb.sha1_fingerprint_from_private_key(&key);
     /// ```
     pub fn sha1_fingerprint_from_private_key(
@@ -202,9 +226,12 @@ impl Webcryptobox {
     ///
     /// This hashes the DER data of the key.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key_pair();
-    /// let public_key = wcb.derive_public_key(&key);
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key_pair().unwrap();
+    /// let public_key = wcb.derive_public_key(&key).unwrap();
     /// let fingerprint = wcb.sha1_fingerprint_from_public_key(&public_key);
     /// ```
     pub fn sha1_fingerprint_from_public_key(
@@ -222,10 +249,14 @@ impl Webcryptobox {
 
     /// Calculate a SHA-256 fingeprint from a private key.
     ///
-    /// This hashes the DER data of the public key part of the key.
+    /// This hashes the DER data of the public key part of the key. Note this does not create a
+    /// hash of the private key, but the public key.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key_pair();
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key_pair().unwrap();
     /// let fingerprint = wcb.sha256_fingerprint_from_private_key(&key);
     /// ```
     pub fn sha256_fingerprint_from_private_key(
@@ -245,9 +276,12 @@ impl Webcryptobox {
     ///
     /// This hashes the DER data of the key.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key_pair();
-    /// let public_key = wcb.derive_public_key(&key);
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key_pair().unwrap();
+    /// let public_key = wcb.derive_public_key(&key).unwrap();
     /// let fingerprint = wcb.sha256_fingerprint_from_public_key(&public_key);
     /// ```
     pub fn sha256_fingerprint_from_public_key(
@@ -265,7 +299,10 @@ impl Webcryptobox {
 
     /// Generate AES key material to be used with `encrypt` and `decrypt`.
     ///
-    /// ```rs
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
     /// let key = wcb.generate_key();
     /// ```
     pub fn generate_key(&self) -> Result<Vec<u8>, ErrorStack> {
@@ -287,10 +324,13 @@ impl Webcryptobox {
     /// Derives AES key material to be used with `encrypt` and `decrypt` from given private and
     /// public key.
     ///
-    /// ```rs
-    /// let alice = wcb.generate_key_pair();
-    /// let bob = wcb.generate_key_pair();
-    /// let bobs_public_key = wcb.derive_public_key(&bob);
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let alice = wcb.generate_key_pair().unwrap();
+    /// let bob = wcb.generate_key_pair().unwrap();
+    /// let bobs_public_key = wcb.derive_public_key(&bob).unwrap();
     /// let key = wcb.derive_key(alice, bobs_public_key);
     /// ```
     pub fn derive_key(
@@ -321,7 +361,10 @@ impl Webcryptobox {
 
     /// Generate AES initialization vector to be used with `encrypt` and `decrypt`.
     ///
-    /// ```rs
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
     /// let iv = wcb.generate_iv();
     /// ```
     pub fn generate_iv(&self) -> Result<Vec<u8>, ErrorStack> {
@@ -342,9 +385,12 @@ impl Webcryptobox {
 
     /// Encrypts data with key and iv.
     ///
-    /// ```rs
-    /// let key = wcb.generate_key();
-    /// let iv = wcb.generate_iv();
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    /// let key = wcb.generate_key().unwrap();
+    /// let iv = wcb.generate_iv().unwrap();
     /// let data = (b"a secret message").to_vec();
     /// let encrypted_message = wcb.encrypt(&key, &iv, &data);
     /// ```
@@ -363,8 +409,16 @@ impl Webcryptobox {
 
     /// Decrypts data with key and iv.
     ///
-    /// To decrypt the message from above:
-    /// ```rs
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    ///
+    /// let key = wcb.generate_key().unwrap();
+    /// let iv = wcb.generate_iv().unwrap();
+    /// let data = (b"a secret message").to_vec();
+    /// let encrypted_message = wcb.encrypt(&key, &iv, &data).unwrap();
+    ///
     /// let message = wcb.decrypt(&key, &iv, &encrypted_message);
     /// ```
     pub fn decrypt(&self, key: &[u8], iv: &Vec<u8>, data: &[u8]) -> Result<Vec<u8>, ErrorStack> {
@@ -381,13 +435,18 @@ impl Webcryptobox {
 
     /// Derives AES key from given private and public key and encrypts message.
     ///
-    /// ```rs
-    /// let alice = wcb.generate_key_pair();
-    /// let bob = wcb.generate_key_pair();
-    /// let bobs_public_key = wcb.derive_public_key(&bob);
-    /// let iv = wcb.generate_iv();
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    ///
+    /// let alice = wcb.generate_key_pair().unwrap();
+    /// let bob = wcb.generate_key_pair().unwrap();
+    /// let bobs_public_key = wcb.derive_public_key(&bob).unwrap();
+    ///
+    /// let iv = wcb.generate_iv().unwrap();
     /// let data = (b"a secret message").to_vec();
-    /// let encrypted_message = wcb.derive_and_encrypt(&alice, &bobs_public_key, &iv, &data);
+    /// let encrypted_message = wcb.derive_and_encrypt(alice, bobs_public_key, &iv, &data);
     /// ```
     pub fn derive_and_encrypt(
         &self,
@@ -403,10 +462,21 @@ impl Webcryptobox {
 
     /// Derives AES key from given private and public key and decrypts message.
     ///
-    /// To decrypt the message from above:
-    /// ```rs
-    /// let alice_public_key = wcb.derive_public_key(&alice);
-    /// let message = wcb.derive_and_decrypt(&bob, &alice_public_key, &iv, &encrypted_message);
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::default();
+    ///
+    /// let alice = wcb.generate_key_pair().unwrap();
+    /// let bob = wcb.generate_key_pair().unwrap();
+    /// let bobs_public_key = wcb.derive_public_key(&bob).unwrap();
+    /// let alice_public_key = wcb.derive_public_key(&alice).unwrap();
+    ///
+    /// let iv = wcb.generate_iv().unwrap();
+    /// let data = (b"a secret message").to_vec();
+    /// let encrypted_message = wcb.derive_and_encrypt(alice, bobs_public_key, &iv, &data).unwrap();
+    ///
+    /// let message = wcb.derive_and_decrypt(bob, alice_public_key, &iv, &encrypted_message);
     /// ```
     pub fn derive_and_decrypt(
         &self,

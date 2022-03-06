@@ -1,7 +1,7 @@
 # Webcryptobox
 Webcryptobox provides convenient wrappers around OpenSSL to use WebCrypto compatible cryptography.
 
-It works nicely together with the [JavaScript Webcryptobox](https://github.com/jo/webcryptobox-js).
+It works nicely together with the [JavaScript Webcryptobox](https://github.com/jo/webcryptobox-js) and [Bash Webcryptobox](https://github.com/jo/webcryptobox-sh).
 
 Webcryptobox provides functions for elliptic curve key generation, derivation, import and export as well as AES encryption and decryption.
 
