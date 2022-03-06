@@ -1,7 +1,9 @@
 [package]
 name = "webcryptobox"
-version = "0.1.0"
+version = "1.0.0"
+license = "Apache-2.0"
 edition = "2021"
+description = "Webcryptobox provides convenient wrappers around OpenSSL to use WebCrypto compatible cryptography."
 
 [dependencies]
 openssl = "0.10.38"
