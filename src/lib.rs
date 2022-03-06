@@ -19,6 +19,20 @@ use openssl::symm;
 const AEAD_TAG_LENGTH: usize = 16;
 
 /// Holds cipher configuration and provides the methods for dancing with elliptic curves and advanced encryption.
+///
+/// Use the factories [`webcryptobox::Webcryptobox::new`] or
+/// [`webcryptobox::Webcryptobox::default`] to instantiate a Webcryptobox:
+///
+/// # Example:
+///
+/// ```rust
+/// // P-512, AES 256 GCM
+/// let wcb_default = webcryptobox::Webcryptobox::default();
+/// // same as
+/// let wcb_p256_aes_256_gcm = webcryptobox::Webcryptobox::new("P-521", "GCM", 256);
+/// // P-256, AES 128 CBC
+/// let wcb_p256_aes_128_cbc = webcryptobox::Webcryptobox::new("P-256", "CBC", 128);
+/// ```
 pub struct Webcryptobox {
     is_aead: bool,
     group: EcGroup,
@@ -28,23 +42,25 @@ pub struct Webcryptobox {
 impl Webcryptobox {
     /// Creates a new Webcryptobox.
     ///
-    /// ```rs
-    /// let wcb = Webcryptobox::new("P-256", "CBC", 128);
-    /// ```
-    /// This example uses the curve `P-256`, AES in `CBC` mode with a key length of 128.
+    /// # Supported Curves:
+    /// * `P-256` [openssl::nid::Nid::X9_62_PRIME256V1`] aka `secp256r1` or `prime256v1`
+    /// * `P-384` [openssl::nid::Nid::SECP384R1`] aka `secp384r1` or `ansip384r1`
+    /// * `P-521` [openssl::nid::Nid::SECP521R1`] aka `secp521r1` or `ansip521r1`
     ///
-    /// **Supported Curves:**
-    /// * `P-256` [openssl::Nid::X9_62_PRIME256V1`] aka `secp256r1` or `prime256v1`
-    /// * `P-384` [openssl::Nid::SECP384R1`] aka `secp384r1` or `ansip384r1`
-    /// * `P-521` [openssl::Nid::SECP521R1`] aka `secp521r1` or `ansip521r1`
-    ///
-    /// **Supported AES Modes:**
+    /// # Supported AES Modes:
     /// * `CBC`: Cipher Block Chaining Mode
     /// * `GCM`: Galois/Counter Mode
     ///
-    /// **Supported AES key Lengths:**
+    /// # Supported AES key Lengths:
     /// * `128`
     /// * `256`
+    ///
+    /// # Example:
+    ///
+    /// ```rust
+    /// let wcb = webcryptobox::Webcryptobox::new("P-256", "CBC", 128);
+    /// ```
+    /// This example uses the curve `P-256`, AES in `CBC` mode with a key length of 128.
     pub fn new(curve: &str, mode: &str, length: usize) -> Webcryptobox {
         let curve = match curve {
             "P-256" => Nid::X9_62_PRIME256V1,
