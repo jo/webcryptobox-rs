@@ -1,11 +1,11 @@
 # Webcryptobox
-Webcryptobox provides convenient wrappers around OpenSSL to use WebCrypto compatible cryptography.
+Convenient wrappers around [OpenSSL](https://docs.rs/openssl/latest/openssl/) to use [WebCrypto](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) compatible cryptography.
 
 It works nicely together with the [JavaScript Webcryptobox](https://github.com/jo/webcryptobox-js) and [Bash Webcryptobox](https://github.com/jo/webcryptobox-sh).
 
-Webcryptobox provides functions for elliptic curve key generation, derivation, import and export as well as AES encryption and decryption.
+Webcryptobox is **both a library and a little command line interface.** It helps with elliptic curve key generation, derivation, fingerprinting, import and export as well as AES encryption and decryption.
 
-Webcryptobox comes with both a library and a little command line interface. For the library documentation, see [docs.rs/webcryptobox](https://docs.rs/webcryptobox/latest/webcryptobox/). In the following I describe the CLI usage.
+For the library documentation, see [docs.rs/webcryptobox](https://docs.rs/webcryptobox/latest/webcryptobox/). In the following I describe the CLI usage.
 
 ## Installation
 Clone the project, compile it and use the binary:

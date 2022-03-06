@@ -1,9 +1,16 @@
-//! Webcryptobox provides convenient wrappers around OpenSSL to use WebCrypto compatible
+#![warn(missing_docs)]
+#![warn(rustdoc::missing_doc_code_examples)]
+
+//! Webcryptobox provides convenient wrappers around
+//! [OpenSSL](https://docs.rs/openssl/latest/openssl/) to use
+//! [WebCrypto](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) compatible
 //! cryptography.
 //!
-//! It works nicely together with the [JavaScript Webcryptobox](https://github.com/jo/webcryptobox-js).
+//! It works nicely together with the [JavaScript
+//! Webcryptobox](https://github.com/jo/webcryptobox-js) and [Bash
+//! Webcryptobox](https://github.com/jo/webcryptobox-sh).
 //!
-//! Webcryptobox provides functions for elliptic curve key generation, derivation, import and
+//! Webcryptobox helps with elliptic curve key generation, derivation, fingerprinting, import and
 //! export as well as AES encryption and decryption.
 
 use openssl::derive::Deriver;
@@ -16,9 +23,11 @@ use openssl::rand::rand_bytes;
 use openssl::sha;
 use openssl::symm;
 
+// Length of the AEAD tag used in GCM mode
 const AEAD_TAG_LENGTH: usize = 16;
 
-/// Holds cipher configuration and provides the methods for dancing with elliptic curves and advanced encryption.
+/// Holds cipher configuration and provides the methods for dancing with elliptic curves and
+/// advanced encryption.
 ///
 /// Use the factories [`webcryptobox::Webcryptobox::new`] or
 /// [`webcryptobox::Webcryptobox::default`] to instantiate a Webcryptobox:
