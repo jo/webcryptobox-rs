@@ -46,7 +46,7 @@ pub fn main() {
     let mode = env::var("MODE").unwrap_or("GCM".to_string());
     let length = env::var("LENGTH").unwrap_or("256".to_string());
     let length = length.parse::<usize>().unwrap();
-    
+
     let wcb = Webcryptobox::new(&curve, &mode, length);
 
     let args: Vec<String> = env::args().collect();
@@ -61,20 +61,20 @@ pub fn main() {
                     let pem = wcb.export_private_key_pem(key).unwrap();
                     let pem_string = std::str::from_utf8(&pem).unwrap();
                     println!("{}", pem_string)
-                },
+                }
                 "generate-key" => {
                     let key = wcb.generate_key().unwrap();
                     let key_string = hex::encode(key);
                     println!("{}", key_string)
-                },
+                }
                 "generate-iv" => {
                     let key = wcb.generate_iv().unwrap();
                     let key_string = hex::encode(key);
                     println!("{}", key_string)
-                },
-                _ => help()
+                }
+                _ => help(),
             }
-        },
+        }
         3 => {
             let cmd = &args[1];
             match &cmd[..] {
@@ -87,7 +87,7 @@ pub fn main() {
                     let pem = wcb.export_public_key_pem(&public_key).unwrap();
                     let pem_string = std::str::from_utf8(&pem).unwrap();
                     println!("{}", pem_string)
-                },
+                }
                 "sha1-fingerprint" => {
                     let filename = &args[2];
 
@@ -96,14 +96,14 @@ pub fn main() {
                         true => {
                             let key = wcb.import_private_key_pem(&pem).unwrap();
                             wcb.sha1_fingerprint_from_private_key(&key).unwrap()
-                        },
+                        }
                         _ => {
                             let key = wcb.import_public_key_pem(&pem).unwrap();
                             wcb.sha1_fingerprint_from_public_key(&key).unwrap()
                         }
                     };
                     println!("{}", fingerprint)
-                },
+                }
                 "sha256-fingerprint" => {
                     let filename = &args[2];
 
@@ -112,17 +112,17 @@ pub fn main() {
                         true => {
                             let key = wcb.import_private_key_pem(&pem).unwrap();
                             wcb.sha256_fingerprint_from_private_key(&key).unwrap()
-                        },
+                        }
                         _ => {
                             let key = wcb.import_public_key_pem(&pem).unwrap();
                             wcb.sha256_fingerprint_from_public_key(&key).unwrap()
                         }
                     };
                     println!("{}", fingerprint)
-                },
-                _ => help()
+                }
+                _ => help(),
             }
-        },
+        }
         4 => {
             let cmd = &args[1];
             match &cmd[..] {
@@ -139,7 +139,7 @@ pub fn main() {
                     let key = wcb.derive_key(private_key, public_key).unwrap();
                     let key_string = hex::encode(key);
                     println!("{}", key_string)
-                },
+                }
                 "encrypt" => {
                     let key_hex = &args[2];
                     let iv_hex = &args[3];
@@ -154,7 +154,7 @@ pub fn main() {
                     let encrypted_data_base64 = base64::encode(encrypted_data);
 
                     println!("{}", encrypted_data_base64)
-                },
+                }
                 "decrypt" => {
                     let key_hex = &args[2];
                     let iv_hex = &args[3];
@@ -170,10 +170,10 @@ pub fn main() {
                     let message_string = std::str::from_utf8(&message).unwrap();
 
                     println!("{}", message_string)
-                },
-                _ => help()
+                }
+                _ => help(),
             }
-        },
+        }
         5 => {
             let cmd = &args[1];
             match &cmd[..] {
@@ -195,7 +195,7 @@ pub fn main() {
                     let encrypted_data_base64 = base64::encode(encrypted_data);
 
                     println!("{}", encrypted_data_base64)
-                },
+                }
                 "derive-and-decrypt" => {
                     let private_key_filename = &args[2];
                     let public_key_filename = &args[3];
@@ -214,10 +214,10 @@ pub fn main() {
                     let message_string = std::str::from_utf8(&message).unwrap();
 
                     println!("{}", message_string)
-                },
-                _ => help()
+                }
+                _ => help(),
             }
-        },
-        _ => help()
+        }
+        _ => help(),
     }
 }
