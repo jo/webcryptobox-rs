@@ -43,16 +43,19 @@
 //! ```
 
 use openssl::derive::Deriver;
-use openssl::ec::{EcGroup, EcKey};
+use openssl::ec::EcGroup;
 use openssl::error::ErrorStack;
 use openssl::nid::Nid;
 use openssl::pkey::PKey;
-use openssl::pkey::{Private, Public};
 use openssl::rand::rand_bytes;
 use openssl::sha;
 use openssl::symm;
 
-// Default configuration
+// re-exports
+pub use openssl::ec::EcKey;
+pub use openssl::pkey::{Private, Public};
+
+// Cipher configuration
 const CURVE: Nid = Nid::SECP521R1;
 const CIPHER: fn() -> symm::Cipher = symm::Cipher::aes_256_cbc;
 const KEY_LENGTH: usize = 32;

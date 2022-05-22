@@ -1,3 +1,8 @@
+# Changelog
+
+## v2.1.0 - Re-Exports of OpenSSL Key Structs
+Re-exporting OpenSSLs `EcKey` and `Private`/`Public` pkey structs.
+
 ## v2.0.0 - Selected Cipher
 Back to a flattened version with selected cipher: ECDH P-521 AES-256-CBC.
 
