@@ -12,5 +12,5 @@ authors = ["Johannes J. Schmidt <schmidt@pm.me>"]
 keywords = ["WebCrypto", "crypto", "ec", "aes"]
 
 [dependencies]
-openssl = "0.10.38"
+openssl = "0.10.64"
 hex = "0.4.3"

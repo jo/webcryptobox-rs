@@ -1,5 +1,4 @@
 #![warn(missing_docs)]
-#![warn(rustdoc::missing_doc_code_examples)]
 
 //! Webcryptobox provides convenient wrappers around
 //! [OpenSSL](https://docs.rs/openssl/latest/openssl/) to use
